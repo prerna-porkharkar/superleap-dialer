@@ -10,9 +10,11 @@ import {
 import { ScreenHeader } from "@/app/components/screen-header/component";
 import { CreateContactButton } from "../components/create-contact-button/component";
 import { Contact } from "@/types";
+import { useContacts } from "@/providers/contacts/hook";
+import { ThemedText } from "@/components/ThemedText";
 
 const ContactsManager = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const { contacts } = useContacts();
   const [search, setSearch] = useState("");
 
   const filteredContacts = contacts.filter(
@@ -24,21 +26,35 @@ const ContactsManager = () => {
   return (
     <View style={styles.container}>
       <ScreenHeader title="Contacts" ActionButton={<CreateContactButton />} />
-      <TextInput
-        style={styles.input}
-        placeholder="Search contacts"
-        value={search}
-        onChangeText={setSearch}
-      />
-      <FlatList
-        data={filteredContacts}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <Text style={styles.contactItem}>
-            {item.name} - {item.phone}
-          </Text>
-        )}
-      />
+      <View style={styles.contentWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="Search contacts"
+          value={search}
+          onChangeText={setSearch}
+        />
+        <FlatList
+          data={filteredContacts}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => <ContactItem item={item} />}
+          style={styles.contactlist}
+          ItemSeparatorComponent={() => <ItemSeparator />}
+        />
+      </View>
+    </View>
+  );
+};
+
+const ItemSeparator = () => {
+  return <View style={[styles.separator]} />;
+};
+
+const ContactItem = ({ item }: { item: Contact }) => {
+  return (
+    <View style={styles.contactItem}>
+      <ThemedText type="default">
+        {item.name} - {item.phone}
+      </ThemedText>
     </View>
   );
 };
@@ -46,32 +62,30 @@ const ContactsManager = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+  },
+  contentWrapper: {
+    flex: 1,
+    width: "100%",
+    padding: 15,
   },
   input: {
     borderWidth: 1,
     padding: 10,
-    width: "80%",
-    marginVertical: 10,
+    width: "100%",
     borderRadius: 5,
+    paddingHorizontal: 15,
   },
-  addButton: {
-    backgroundColor: "blue",
-    padding: 15,
-    borderRadius: 5,
-    marginTop: 10,
+  contactlist: {
+    paddingTop: 20,
   },
   contactItem: {
-    fontSize: 18,
-    marginVertical: 5,
+    paddingVertical: 15,
   },
-  buttonText: {
-    fontSize: 24,
-    color: "black",
+  contactItemText: {
+    fontSize: 18,
   },
   contactsList: {},
+  separator: {},
 });
 
 export default ContactsManager;

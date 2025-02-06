@@ -8,6 +8,7 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -31,18 +32,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="dialpad"
-        options={{
           title: "Dialer",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="phone.fill" color={color} />
+            <FontAwesome name="phone" size={28} color={color} />
           ),
         }}
       />

@@ -11,17 +11,17 @@ import {
 import { useState } from "react";
 import { Contact } from "@/types";
 import { useTheme } from "@react-navigation/native";
+import { useContacts } from "@/providers/contacts/hook";
 
 export default function CreateContact() {
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const { addContact } = useContacts();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [search, setSearch] = useState("");
   const { colors } = useTheme();
 
-  const addContact = () => {
+  const _addContact = () => {
     if (name && phone) {
-      setContacts([...contacts, { name, phone }]);
+      addContact({ name, phone });
       setName("");
       setPhone("");
     }
@@ -47,7 +47,7 @@ export default function CreateContact() {
         />
         <TouchableOpacity
           style={[styles.addButton, { backgroundColor: colors.primary }]}
-          onPress={addContact}
+          onPress={_addContact}
         >
           <Text style={[styles.buttonText, { color: colors.card }]}>
             Add Contact
