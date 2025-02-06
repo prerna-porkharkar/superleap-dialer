@@ -17,7 +17,7 @@
 3. Android
 
   ```bash
-    press i
+    press a
    ```
 
 In the output, you'll find options to open the app in a
