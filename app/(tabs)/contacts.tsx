@@ -9,25 +9,11 @@ import {
 } from "react-native";
 import { ScreenHeader } from "@/app/components/screen-header/component";
 import { CreateContactButton } from "../components/create-contact-button/component";
-
-interface Contact {
-  name: string;
-  phone: string;
-}
+import { Contact } from "@/types";
 
 const ContactsManager = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [search, setSearch] = useState("");
-
-  const addContact = () => {
-    if (name && phone) {
-      setContacts([...contacts, { name, phone }]);
-      setName("");
-      setPhone("");
-    }
-  };
 
   const filteredContacts = contacts.filter(
     (contact) =>
@@ -53,22 +39,6 @@ const ContactsManager = () => {
           </Text>
         )}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone"
-        value={phone}
-        keyboardType="phone-pad"
-        onChangeText={setPhone}
-      />
-      <TouchableOpacity style={styles.addButton} onPress={addContact}>
-        <Text style={styles.buttonText}>Add Contact</Text>
-      </TouchableOpacity>
     </View>
   );
 };

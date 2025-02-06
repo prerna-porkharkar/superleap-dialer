@@ -9,6 +9,7 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { AppFonts } from "./styles/fonts";
+import { ContactsProvider } from "@/providers/contacts/provider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -57,12 +58,28 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaView style={styles.wrapper}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </SafeAreaView>
+      <ContactsProvider>
+        <SafeAreaView
+          style={[
+            styles.wrapper,
+            {
+              backgroundColor:
+                colorScheme === "dark"
+                  ? DarkTheme.colors.background
+                  : DefaultTheme.colors.background,
+            },
+          ]}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="create-contact"
+              options={{ headerShown: false, presentation: "modal" }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </SafeAreaView>
+      </ContactsProvider>
 
       <StatusBar style="auto" />
     </ThemeProvider>
