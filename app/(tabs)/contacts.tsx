@@ -29,7 +29,6 @@ const ContactsManager = () => {
       contact.name.toLowerCase().includes(search.toLowerCase()) ||
       contact.phone.includes(search)
   );
-
   return (
     <View style={styles.container}>
       <ScreenHeader title="Contacts" ActionButton={<CreateContactButton />} />

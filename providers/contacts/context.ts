@@ -1,4 +1,4 @@
-import { Contact } from "@/types";
+import { CallLog, Contact } from "@/types";
 import { createContext } from "react";
 
 export interface ContactsContext {
@@ -7,6 +7,8 @@ export interface ContactsContext {
   addContact: (contact: Contact) => Promise<void>;
   blockContact: (contact: Contact) => Promise<void>;
   unBlock: (contact: Contact) => Promise<void>;
+  triggerCall: (number: string) => Promise<void>;
+  callLogs: CallLog[];
 }
 
 export const ContactsContext = createContext<ContactsContext>({
@@ -21,4 +23,8 @@ export const ContactsContext = createContext<ContactsContext>({
   unBlock: async () => {
     return;
   },
+  triggerCall: async () => {
+    return;
+  },
+  callLogs: [],
 });
