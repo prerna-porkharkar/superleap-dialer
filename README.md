@@ -5,13 +5,19 @@
 1. Install dependencies
 
    ```bash
-   npm install
+   yarn
    ```
 
 2. Start the app
 
    ```bash
-    npx expo start
+    yarn start
+   ```
+
+3. Android
+
+  ```bash
+    press i
    ```
 
 In the output, you'll find options to open the app in a
