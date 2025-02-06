@@ -6,11 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  ScrollView,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "@react-navigation/native";
 import { ScreenHeader } from "@/app/components/screen-header/component";
+import { CreateContactButton } from "../components/create-contact-button/component";
 
 interface Contact {
   name: string;
@@ -39,7 +37,7 @@ const ContactsManager = () => {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Contacts" />
+      <ScreenHeader title="Contacts" ActionButton={<CreateContactButton />} />
       <TextInput
         style={styles.input}
         placeholder="Search contacts"

@@ -22,9 +22,11 @@ export const ScreenHeader = ({
 
 const styles = StyleSheet.create({
   wrapper: {
+    flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
     padding: 15,
+    alignItems: "center",
   },
   title: {
     fontSize: 24,
