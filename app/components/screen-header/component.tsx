@@ -1,3 +1,4 @@
+import { ThemedText } from "@/components/ThemedText";
 import { useTheme } from "@react-navigation/native";
 import { ReactNode } from "react";
 import { StyleSheet, View, Text } from "react-native";
@@ -13,7 +14,7 @@ export const ScreenHeader = ({
 
   return (
     <View style={[styles.wrapper, { backgroundColor: colors.background }]}>
-      <Text style={styles.title}>{title}</Text>
+      <ThemedText style={styles.title}>{title}</ThemedText>
 
       <View>{ActionButton}</View>
     </View>

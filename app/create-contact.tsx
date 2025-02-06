@@ -21,7 +21,7 @@ export default function CreateContact() {
 
   const _addContact = () => {
     if (name && phone) {
-      addContact({ name, phone });
+      addContact({ name, phone, id: phone });
       setName("");
       setPhone("");
     }
@@ -33,17 +33,25 @@ export default function CreateContact() {
 
       <View style={styles.wrapper}>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { borderColor: colors.border, color: colors.text },
+          ]}
           placeholder="Name"
           value={name}
           onChangeText={setName}
+          placeholderTextColor={colors.text}
         />
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { borderColor: colors.border, color: colors.text },
+          ]}
           placeholder="Phone"
           value={phone}
           keyboardType="phone-pad"
           onChangeText={setPhone}
+          placeholderTextColor={colors.text}
         />
         <TouchableOpacity
           style={[styles.addButton, { backgroundColor: colors.primary }]}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   View,
   Text,
@@ -12,10 +12,16 @@ import { CreateContactButton } from "../components/create-contact-button/compone
 import { Contact } from "@/types";
 import { useContacts } from "@/providers/contacts/hook";
 import { ThemedText } from "@/components/ThemedText";
+import { useTheme } from "@react-navigation/native";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { DEFAULT_TOUCHABLE_OPACITY } from "@/constants";
+import Feather from "@expo/vector-icons/Feather";
 
 const ContactsManager = () => {
   const { contacts } = useContacts();
   const [search, setSearch] = useState("");
+  const { colors } = useTheme();
 
   const filteredContacts = contacts.filter(
     (contact) =>
@@ -28,8 +34,12 @@ const ContactsManager = () => {
       <ScreenHeader title="Contacts" ActionButton={<CreateContactButton />} />
       <View style={styles.contentWrapper}>
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            { borderColor: colors.border, color: colors.text },
+          ]}
           placeholder="Search contacts"
+          placeholderTextColor={colors.text}
           value={search}
           onChangeText={setSearch}
         />
@@ -46,15 +56,66 @@ const ContactsManager = () => {
 };
 
 const ItemSeparator = () => {
-  return <View style={[styles.separator]} />;
+  const { colors } = useTheme();
+  return (
+    <View style={[styles.separator, { backgroundColor: colors.border }]} />
+  );
 };
 
 const ContactItem = ({ item }: { item: Contact }) => {
+  const { colors } = useTheme();
+  const { blockContact, blockedContacts, unBlock } = useContacts();
+
+  const isBlockedContact = useMemo(
+    () => blockedContacts.find((c) => c.id === item.id),
+    [blockedContacts]
+  );
+
+  const onCallPress = useCallback(() => {}, []);
+
+  const onBlockPress = useCallback(() => {
+    blockContact(item);
+  }, []);
+
+  const onUnBlockPress = useCallback(() => {
+    unBlock(item);
+  }, []);
+
   return (
     <View style={styles.contactItem}>
-      <ThemedText type="default">
-        {item.name} - {item.phone}
-      </ThemedText>
+      <View>
+        <ThemedText type="default">
+          {item.name} - {item.phone}
+        </ThemedText>
+        {isBlockedContact ? (
+          <Text style={{ color: colors.notification }}>Blocked</Text>
+        ) : null}
+      </View>
+
+      <View style={styles.buttons}>
+        <TouchableOpacity
+          onPress={onCallPress}
+          activeOpacity={DEFAULT_TOUCHABLE_OPACITY}
+        >
+          <FontAwesome name="phone" size={18} color={colors.primary} />
+        </TouchableOpacity>
+
+        {isBlockedContact ? (
+          <TouchableOpacity
+            onPress={onUnBlockPress}
+            activeOpacity={DEFAULT_TOUCHABLE_OPACITY}
+          >
+            <Feather name="check" size={18} color={colors.primary} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={onBlockPress}
+            activeOpacity={DEFAULT_TOUCHABLE_OPACITY}
+          >
+            <Entypo name="block" size={18} color={colors.notification} />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -80,12 +141,23 @@ const styles = StyleSheet.create({
   },
   contactItem: {
     paddingVertical: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   contactItemText: {
     fontSize: 18,
   },
   contactsList: {},
-  separator: {},
+  separator: {
+    height: 2,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 16,
+  },
 });
 
 export default ContactsManager;
