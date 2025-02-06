@@ -17,6 +17,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { DEFAULT_TOUCHABLE_OPACITY } from "@/constants";
 import Feather from "@expo/vector-icons/Feather";
+import { useRouter } from "expo-router";
 
 const ContactsManager = () => {
   const { contacts } = useContacts();
@@ -65,13 +66,16 @@ const ItemSeparator = () => {
 const ContactItem = ({ item }: { item: Contact }) => {
   const { colors } = useTheme();
   const { blockContact, blockedContacts, unBlock } = useContacts();
+  const router = useRouter();
 
   const isBlockedContact = useMemo(
     () => blockedContacts.find((c) => c.id === item.id),
     [blockedContacts]
   );
 
-  const onCallPress = useCallback(() => {}, []);
+  const onCallPress = useCallback(() => {
+    router.push({ pathname: "/", params: { dailedNumber: item.phone } });
+  }, []);
 
   const onBlockPress = useCallback(() => {
     blockContact(item);

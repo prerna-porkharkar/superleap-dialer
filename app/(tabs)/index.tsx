@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 
 const DialPad = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const { dailedNumber } = useLocalSearchParams();
 
   const handlePress = (value: string) => {
     setPhoneNumber((prev) => prev + value);
@@ -19,6 +21,12 @@ const DialPad = () => {
       // Here you can integrate with Linking API to initiate a real call
     }
   };
+
+  useEffect(() => {
+    if (dailedNumber && typeof dailedNumber === "string") {
+      setPhoneNumber(dailedNumber);
+    }
+  }, [dailedNumber]);
 
   const renderButton = (value: string) => (
     <TouchableOpacity
