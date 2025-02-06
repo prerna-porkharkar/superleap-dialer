@@ -18,6 +18,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { DEFAULT_TOUCHABLE_OPACITY } from "@/constants";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
+import { ItemSeparator } from "../components/item-separator/component";
 
 const ContactsManager = () => {
   const { contacts } = useContacts();
@@ -52,13 +53,6 @@ const ContactsManager = () => {
         />
       </View>
     </View>
-  );
-};
-
-const ItemSeparator = () => {
-  const { colors } = useTheme();
-  return (
-    <View style={[styles.separator, { backgroundColor: colors.border }]} />
   );
 };
 
@@ -152,9 +146,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   contactsList: {},
-  separator: {
-    height: 2,
-  },
   buttons: {
     flexDirection: "row",
     justifyContent: "space-between",

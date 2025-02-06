@@ -19,7 +19,7 @@ const DialPad = () => {
 
   const handleCall = useCallback(() => {
     triggerCall(phoneNumber);
-  }, []);
+  }, [phoneNumber]);
 
   useEffect(() => {
     if (dailedNumber && typeof dailedNumber === "string") {
@@ -41,7 +41,7 @@ const DialPad = () => {
     <View style={styles.container}>
       <Text style={styles.display}>{phoneNumber}</Text>
       <View style={styles.dialPad}>
-        {[..."123456789*0#"].map((digit) => renderButton(digit))}
+        {[..."123456789*0#+"].map((digit) => renderButton(digit))}
       </View>
       <View style={styles.actions}>
         <TouchableOpacity style={styles.callButton} onPress={handleCall}>
