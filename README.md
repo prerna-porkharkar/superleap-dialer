@@ -26,4 +26,4 @@ In the output, you'll find options to open the app in a
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 
-DEMO VIDEO IS ATTACHED.
+DEMO VIDEO IS UPLOADED IN THE REPOSITORY ITSELF.
